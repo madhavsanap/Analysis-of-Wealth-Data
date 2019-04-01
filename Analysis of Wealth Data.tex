@@ -1,0 +1,235 @@
+\documentclass[a4paper,twoside,12pt]{article}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-0.5 in}
+\setlength{\headsep}{0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9.5in}
+\renewcommand{\baselinestretch}{1.5} 
+\usepackage{amsbsy}
+\usepackage[ansinew]{inputenc}
+\usepackage[USenglish]{babel} %francais, polish, spanish, ...
+\usepackage[T1]{fontenc}
+\usepackage{caption}
+\usepackage{fancyhdr} %%Fancy headings
+\usepackage{longtable} %%For tables, that exceed one page
+\usepackage{lmodern} %Type1-font for non-english texts and characters
+\usepackage{textcomp}
+%\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{animate}
+\usepackage[a4paper,margin=25mm,top=25mm]{geometry}
+\usepackage{amsbsy}
+\usepackage{subfigure}
+\usepackage{siunitx}
+
+\usepackage{enumerate}
+\usepackage{hyperref}
+\hypersetup{colorlinks,
+citecolor=black,
+filecolor=black,
+linkcolor=black,
+urlcolor=black}
+\begin{document}
+\begin{titlepage}
+\pagestyle{empty} %No headings for the first pages.
+\begin{center}
+\line(1,0){300} \\
+[0.25in]
+
+\huge \textbf{Statistical Analysis of Wealth Data for Households }\\
+[1.5cm]
+\end{center}
+
+\begin{center}
+   \large Sanap Madhav \\
+	\large \textbf{Department of Statistics}
+
+\large \textbf{Savitribai Phule Pune University}
+
+
+\vspace{1.5cm}
+\textsc{\normalsize \large April 1, 2019}
+\end{center}
+\end{titlepage}
+
+\tableofcontents %Table of contents
+\cleardoublepage %The first chapter should start on an odd page.
+\pagestyle{plain} %Now display headings: headings / fancy / ...
+
+\begin{align*}
+
+\section{Data Cleaning and Transformation}\label{hints}\\
+\normalsize{
+\subsection{Data Cleaning}
+Observing data it can be seen that variable `toilet share' has more than 2 lakhs missing values. Hence, this variable is not considered for further analysis. 
+
+There are 24,631 observations(i.e., households) whose response is `other' for some variables, which doesn't give information about what type of facility is available at that household for that particular variable. Hence, these observations are discarded from further analysis. Further analysis is done on the basis of remaining 5,77,492 observations and 36 variables.
+
+\subsection{Data Processing}
+As response of variables like water, toilet, floor, wall, fuel and roof have more than two levels and that are nominal in nature (i.e., level 22 is not necessarily greater than level 11), they are converted to binary variables by using following logic. Amenities or facilities which are more expensive/represent high wealth of household labelled as one and zero otherwise.
+
+\begin{itemize}
+\item \textbf{For variable water:} Piped into dwelling, Piped to yard, Tube well or borehole, Protected well, Bottled water, Community RO Plant are more expensive drinking water sources and hence labelled as one. Further remaining responses/levels of this variable are labelled as zero. (Assuming that source of water is owned by household and it reflects high wealth of household up to some extent.)
+
+\item \textbf{For variable toilet:} Toilet facilities which require more money to build are labelled as one. That involves All FLUSH TOILET, Ventilated Improved Pit latrine (VIP), Composting toilet and Dry toilet. NO FACILITY and open pit are labelled as zero. 
+
+\item \textbf{For variable floor:} Natural floors labelled as value zero. Further RUDIMENTARY and FINISHED floor are labelled as one.
+
+\item \textbf{For variable wall:} FINISHED walls are labelled one as response where Natural and RUDIMENTARY wall are labelled as response zero.
+
+\item \textbf{For variable fuel:} Even though natural gas, electricity and LPG are not much expensive these resources are mostly used by wealthy households. Whereas oil, coal, wood, animal dung and grass are used by poor households (assuming households have a free source of wood). Hence natural gas, electricity are labelled as one and oil, wood and coal are labelled as zero. No food cooked in house is labelled as one assuming person with this response takes outside food by paying money.     
+ 
+\item \textbf{For variable roof:} All responses related to FINISHED roof are labelled as one and all other responses are labelled as zero.   
+\end{itemize}   
+}
+
+
+\section{Objectives}
+\normalsize{\begin{itemize}
+	\item To create a proxy variable to represent the wealth of households
+	\item To report percentage of households having facility/amenity for each variable
+	\item To visualize the data for better understanding
+	\item To identify wealthiest households
+\end{itemize}}
+
+\section{Analysis} 
+
+\normalsize {Figure \ref{fig:figure1} represent \% of households with or without particular amenity. Here, we can observe that almost 90\% of households have mobile, bed and bank account. Whereas proportion of households with servant, tractor or telephone
+(i.e., land line) is very less.} 
+
+
+\begin{figure}[htp]
+	 \centering
+		 \includegraphics[width=0.8\textwidth]{../Exploratory/Percentageofhousehold.jpg}
+	 \caption{Percentage of households with or without certain amenities}
+	 \label{fig:figure1}
+ \end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\normalsize{ The actual percentage of having or not having certain amenity/service is reported in figure \ref{fig:figure2} and figure \ref{fig: figure3}.}
+
+\begin{figure}[htp]
+	\centering
+		\includegraphics[width=0.8\textwidth]{../Exploratory/Percentageofhouseholdallvariables1.jpg}
+	\caption{Percentage of household with or without certain amenities for all variables}
+	\label{fig:figure2}
+\end{figure}
+
+\normalsize{Here we can observe that mobile, bed, electricity and having bank account are common in most of the household whereas having car, computer, tractor, thresh and servant is rare for household in given data.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[htp]
+	\centering
+		\includegraphics[width=0.8\textwidth]{../Exploratory/Percentageofhouseholdallvariables2.jpg}
+	\caption{Percentage of household with or without certain amenities for all variables}
+	\label{fig: figure3}
+\end{figure}
+\newpage{
+\subsection{Computation of score to represent the wealth of households}
+
+\normalsize{As having or not having certain amenity/service indicates wealth of household, adding variables can gives us an idea about wealth of that household. But, type of facility and price of that facility/amenity also matter. For example, having car and having mobile shows two different level of wealthiness. Hence, instead of simple addition we will add variables with specific weights. 
+}
+\begin{figure}[htp]
+	\centering
+		\includegraphics[width=0.70\textwidth]{../Exploratory/weights.jpg}
+	\captionof{table}{Weights for variables}
+	\label{fig:figure}
+\end{figure}
+
+\normalsize{ These weights are decided on the basis of relative current price of amenities. Also using human mentality/logic of buying amenity for pride (means having some amenity treated as pride and consider that person as wealthy).  
+
+Weight of amenities in color pink are considered as 1/415, orange color represent weight 5/415, light green color represent 10/415,
+and dark green color represent amenities with weight 50/415. 
+
+For example: As fridge is approximately 5 times more expensive than electric fan (so we considered weight of fridge five times more than electric fan). Similarly car is approximately 10 times more expensive than fridge.       
+
+Using these weights, data is transformed by multiplying each variable with its corresponding weight (say weighted variables). Now, addition of these weighted variables gives us a required score. We treat these score as proxy variable to represent the wealth of households. This is logical because original variable takes value either zero or one for each household. Hence, original variable contribute only if that particular amenity is present (means only if original variable takes value as 1). Further, it's contribution is equal to it's weight. 
+
+Even if all variable contribute, score (sum of weights) will take value one. Hence, the proxy variable (Wealth Index) will lie between zero and one. As having more amenities will increase the contribution of variables, high score indicates wealthy household whereas low score indicates poor household.   
+}
+
+\newpage
+\subsection{Comparison of household on the basis of presence/absence of amenities}
+\large {\textbf{ Please wait and observe following animation}}
+
+\normalsize {The animation below shows bar plot with error bar of new proxy variable (i.e., Wealth Index). Red line indicates variability (error) in average wealth score of households where green bar represent average score for household with or without given amenity
+
+In almost all the cases error bar are not overlapping and hence average wealth score may differ significantly.
+}  
+\begin{figure}[hbtp]
+                \begin{center}
+                \animategraphics[autoplay,controls,width=0.9\linewidth]{0.4}{}{1}{36}
+                \end{center}
+ \end{figure}}
+
+\newpage
+\normalsize{To confirm significant difference between score of variable `wealth of a household' with and without amenity, z-test is used. \\
+$H_0$: Average wealth index of household with and without certain amenity are equal.\\
+$H_1$: Average wealth index of household with and without certain amenity are not equal.\\
+
+
+ Testing above hypothesis for each variable we get following p-values:}
+
+\begin{figure}[htp]
+	\centering
+		\includegraphics[width=1.00\textwidth]{../Exploratory/pvalue.jpg}
+	\captionof{table}{p-values }
+	\label{fig:pvalue}
+\end{figure}
+
+\normalsize{As all p-values are near to zero, we can conclude that there is significant difference between score (Wealth Index) of households with or without certain amenity}
+
+\newpage
+\subsection{Identification of wealthiest households}
+\normalsize{By identifying outliers in `Wealth Index', we get wealthiest households.
+Red color indicate wealthy household (whose score lies beyond cutoff $Q_3$+ 1.5*($Q_3$-$Q_1$)) where $Q_3$ is third quartile and $Q_1$ is first quartile.
+ 
+Here, wealth index is plotted for each household. We can observe layers in following figure which reflect different level of wealthiness in society.}
+
+\begin{figure}[htp]
+	\centering
+		\includegraphics[width=1.00\textwidth]{../Exploratory/wealthofhouseholds.jpg}
+	\caption{Score of households representing wealth}
+	\label{fig:figure4}
+\end{figure}
+
+\newpage
+\subsection{Graphical representation of variables representing basic facilities}
+ \normalsize {Following are the pie chart indicating \% of response in variable water sources, fuel use for cooking and toilet facility. This charts are drawn using original data of above variables where multiple levels are present.}
+\begin{figure}[htp]
+	\centering
+		\includegraphics[width=0.9\textwidth]{../Exploratory/Typeofdrinkingwatersource.jpg}
+	\caption{Sources of drinking water }
+	\label{fig:figure5}
+\end{figure}
+
+\normalsize { Figure \ref{fig:figure5} indicates Piped water and Tube well water are most common resources for drinking water.}
+\begin{figure}[htp]
+	\centering
+		\includegraphics[width=0.9\textwidth]{../Exploratory/fueluseforcooking.jpg}
+	\caption{Fuel use for cooking}
+	\label{fig:figure6}
+\end{figure}
+
+\normalsize { Figure \ref{fig:figure6} indicates LPG and Wood are most common fuel used for cooking.}
+
+\begin{figure}[htp]
+	\centering
+		\includegraphics[width=0.9\textwidth]{../Exploratory/toilet.jpg}
+	\caption{Type of toilet facility}
+	\label{fig:figure7}
+\end{figure}
+
+\normalsize { Figure \ref{fig:figure7} indicates  No facility and flush to septic tank are most common type of toilet facility.}\\
+\newpage
+\normalsize { Due to time constraint and computational limits, variables are transformed into two levels only which can easily extended to three or four levels, which may give a better approximation to proxy variable representing	`wealth of households'.}
+\end{align*}
+
+\end{document}
